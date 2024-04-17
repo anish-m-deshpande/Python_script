@@ -8,7 +8,8 @@ function App() {
 
   function getdata(endpoint)
   {
-    fetch(`http://localhost:3007/pythonscript/${endpoint}`)
+    fetch(`http://localhost:3007/pythonscript/${endpoint}`
+  ,{  method: 'POST',})
     .then((res)=>res.json())
     .then((res)=>{
       if(res.statuscode === 200)
@@ -35,6 +36,7 @@ function App() {
       </div>
 
       <div className='border border-black p-3 mx-10 my-10'>
+        <div>Response</div>
         {response ? 
       <div >
         message :{response.message}<br/>

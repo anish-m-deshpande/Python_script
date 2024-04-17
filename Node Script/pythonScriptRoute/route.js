@@ -36,7 +36,7 @@ const command = `cd ../AnalysisModel-main && python ${scriptPath} gps_test_gabga
 }
 
 
-router.get('/average-height', (req, res) => {
+router.post('/average-height', (req, res) => {
     try{
         PythonScriptRunner(res,'average_height.py');
     }
@@ -47,7 +47,7 @@ router.get('/average-height', (req, res) => {
     }
 });
 
-router.get('/average-width', (req, res) => {
+router.post('/average-width', (req, res) => {
     try{
     PythonScriptRunner(res, 'average_width.py ');
     }
@@ -57,7 +57,7 @@ router.get('/average-width', (req, res) => {
     }
 }); 
 
-router.get('/distribution-map', (req, res) => {
+router.post('/distribution-map', (req, res) => {
     try{
     PythonScriptRunner(res, 'distribution_map.py');
     }
@@ -67,7 +67,7 @@ router.get('/distribution-map', (req, res) => {
     }
 }); 
 
-router.get('/heatmap-carbonseq', (req, res) => {
+router.post('/heatmap-carbonseq', (req, res) => {
     try{
         PythonScriptRunner(res,'heatmap_carbonseq.py');
 
@@ -78,7 +78,7 @@ router.get('/heatmap-carbonseq', (req, res) => {
     }
 });
 
-router.get('/pie-diversity', (req, res) => {
+router.post('/pie-diversity', (req, res) => {
     try{
         PythonScriptRunner(res, 'pie_diversity.py')
 
@@ -89,7 +89,7 @@ router.get('/pie-diversity', (req, res) => {
     }
 })
 
-router.get('/infographic', (req, res) => {
+router.post('/infographic', (req, res) => {
     try{
         PythonScriptRunner(res, 'infographics.py');
 
@@ -100,7 +100,7 @@ router.get('/infographic', (req, res) => {
     }
 }); 
 
-router.get('/merged-script', (req, res) => {
+router.post('/merged-script', (req, res) => {
     try{
         PythonScriptRunner(res,'merged_script.py');
     }
