@@ -11,4 +11,12 @@
 at - http://localhost:3007/ you can see the frontend 
 
 ### api routes
-http://localhost:3007/pythonscript/:endpoint
+   http://localhost:3007/pythonscript/:endpoint
+   endpoint likes:
+   ```bash
+   average-width
+   distribution-map
+   heatmap-carbonseq
+   pie-diversity
+   infographic
+   merged-script
