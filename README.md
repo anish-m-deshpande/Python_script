@@ -5,8 +5,6 @@
    cd node/script
    npm i
    nodemon index.js
-   ```bash
-
 
 
 ### go to the chorme 
