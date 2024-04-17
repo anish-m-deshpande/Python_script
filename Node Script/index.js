@@ -1,7 +1,9 @@
 const express = require('express');
+const fileUpload = require('express-fileupload');
 const cors = require("cors");
 const path = require("path");
-const pythonScriptRoute = require("./pythonScriptRoute/route");
+const pythonScriptRoute = require("./pythonScriptRoute/startScriptRoute");
+const csvfileUpload = require("./pythonScriptRoute/uploadcsvfileRoute");
 
 //load env file
 require("dotenv").config();
@@ -16,9 +18,13 @@ app.use(express.static(buildPath));
 
 //use cors
 app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({extended:true}));
+app.use(fileUpload());
 
 //set route for python script
 app.use("/pythonscript",pythonScriptRoute);
+app.use("/file",csvfileUpload);
 
 //define port
 const PORT = process.env.PORT || 3000;
