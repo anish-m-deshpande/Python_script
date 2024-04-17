@@ -224,7 +224,7 @@ def convert_images_to_pdf_with_custom_text_and_font(image_files, texts, font_siz
 
         if i > 0:
             draw = ImageDraw.Draw(img)
-            font_path = "C:\\Windows\\Fonts\\arial.ttf"  # Correct font path for Windows
+            font_path = "Arial"  # Correct font path for Windows
             font = ImageFont.truetype(font_path, font_sizes[i - 1])
             text_start_y = img.height - 450  # Adjust this as needed
             draw_multiline_text(draw, texts[i - 1], (0, text_start_y), font, 80)

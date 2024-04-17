@@ -1,4 +1,5 @@
 import pandas as pd
+import sys
 import folium
 import matplotlib.colors as mcolors
 from selenium import webdriver
@@ -119,7 +120,7 @@ def main(file_path):
     # Add copyright text to the image
     image = Image.open(png_path)
     draw = ImageDraw.Draw(image)
-    font = ImageFont.truetype("arial.ttf", 45)  # Adjust font and size as needed
+    font = ImageFont.truetype("Arial", 45)  # Adjust font and size as needed
     draw.text((image.width - 650, image.height - 80), "©️ NatureMark Systems 2024", fill=(0, 0, 0), font=font)
     image.save(png_path)
     
@@ -128,3 +129,4 @@ if __name__ == "__main__":
         print("Usage: python distribution_map.py <file_path>")
         sys.exit(1)
     main(sys.argv[1])
+

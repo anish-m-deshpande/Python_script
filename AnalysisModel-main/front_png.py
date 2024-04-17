@@ -23,9 +23,9 @@ def add_text_to_a4_image(image_path, location, start_date, end_date, duration, o
 
     # Set font
     font_size = 60
-    font_path = "C:\\Windows\\Fonts\\arial.ttf"
+    font_path = "Arial"
     if not os.path.exists(font_path):
-        font_path = "arial.ttf"  # Fallback to a default font
+        font_path = "Arial"  # Fallback to a default font
     font = ImageFont.truetype(font_path, size=font_size)
 
     # Prepare and draw text
@@ -56,7 +56,7 @@ def calculate_dates_and_location(csv_file):
     return location, start_date.strftime('%Y-%m-%d'), end_date.strftime('%Y-%m-%d'), f"{duration.days} days"
 
 # File paths and names
-csv_file = './gps_test9.csv'  # Replace with your CSV file path
+csv_file = './gps_test_gabgal.csv'  # Replace with your CSV file path
 image_file = 'Front.png'  # Replace with your PNG image path
 output_image_file = 'output_image_a4_size.png'
 

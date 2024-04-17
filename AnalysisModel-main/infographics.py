@@ -74,7 +74,7 @@ draw = ImageDraw.Draw(image)
 # Define font - the path may need to be changed to an actual .ttf file on your system
 # If you don't have a font file, you can remove the font argument, and a default font will be used
 try:
-    font = ImageFont.truetype("arial.ttf", size=20)
+    font = ImageFont.truetype("Arial", size=20)
 except IOError:
     font = ImageFont.load_default()
 
