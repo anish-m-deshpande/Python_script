@@ -12,9 +12,9 @@ require("dotenv").config();
 const app = express();
 
 
-const _direname =path.dirname("");
-const buildPath = path.join(_direname, "../frontend/nmms_test/build");
-app.use(express.static(buildPath));
+// const _direname =path.dirname("");
+// const buildPath = path.join(_direname, "../frontend/nmms_test/build");
+// app.use(express.static(buildPath));
 
 //use cors
 app.use(cors());
@@ -26,6 +26,11 @@ app.use(fileUpload());
 app.use("/pythonscript",pythonScriptRoute);
 app.use("/file",csvfileUpload);
 
+
+app.get("/1", (req,res)=>{
+    console.log("hittt")
+    res.json({message:"Server is running"});
+})
 //define port
 const PORT = process.env.PORT || 3000;
 

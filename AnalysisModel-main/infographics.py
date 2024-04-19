@@ -126,5 +126,5 @@ for text, coord in coordinates.items():
 # Save the edited image
 edited_image_path = './edited_SummaryConceptNMS.png'
 image.save(edited_image_path)
-image.show()
+# image.show()
 edited_image_path
