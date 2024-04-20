@@ -4,6 +4,7 @@ import { saveAs } from 'file-saver'
 
 function App() {
   const [response, setResponse] = useState(null);
+  const [file, setFile] = useState(null);
   const [errormessage , setErrormessage] = useState(null);
   const [waiting, setWaiting] = useState(null);
 
@@ -12,11 +13,19 @@ function App() {
       saveAs('url', 'image.jpg') // Put your image URL here.
   };
 
-  
+  const handleFileChange = (event) => {
+    setFile(event.target.files[0]);
+};
+
   function getdata(endpoint)
   {
+
+    const formData = new FormData();
+            formData.append('csvFile', file);
     fetch(`http://localhost:3007/pythonscript/${endpoint}`
-  ,{  method: 'POST',})
+  ,{  method: 'POST',
+  body: formData,
+})
     .then((res)=>res.json())
     .then((res)=>{
       if(res.statuscode === 200)
@@ -34,7 +43,23 @@ function App() {
   return (
     <div  className='my-10'>
     <div className='m-10'>
-    <CsvFileUpload/>
+    
+    {/* file upload component */}
+    <div className="flex justify-center mt-10">
+                <h2 className="text-2xl mb-4">Upload CSV File</h2>
+                <input
+                    type="file"
+                    onChange={handleFileChange}
+                    className="border rounded-lg p-2 w-full mb-4"
+                    accept='.csv'
+                />
+                {/* <button
+                    type="submit"
+                    className={`bg-blue-500 text-white font-bold py-2 px-4 rounded ${file ? '' : 'opacity-50 cursor-not-allowed'}`}
+                >
+                    Upload
+                </button> */}
+        </div>
 
     </div>
       <div className='flex justify-evenly'>

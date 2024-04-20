@@ -1,7 +1,39 @@
 const express = require('express');
-
+const path = require('path');
 
 const {exec} = require('child_process');
+
+//function for the csv file upload
+
+function fileUpload(req ,res,next){
+    if (!req.files || Object.keys(req.files).length === 0) {
+        return res.status(400).json({ message: 'No files were uploaded' });
+      }
+    
+      const uploadedFile = req.files.csvFile;
+    
+      // Move the uploaded file to the pyscripts folder
+      const uploadedFilePathPyscripts = path.join(__dirname, './../../AnalysisModel-main/pyscripts', "gps_test_gabgal.csv");
+      uploadedFile.mv(uploadedFilePathPyscripts, (err) => {
+        if (err) {
+          console.error('Error moving file to pyscripts folder:', err);
+          return res.status(500).json({ message: 'Error moving file to pyscripts folder' });
+        }
+        
+        // Move the uploaded file to the AnalysisModel-main folder
+        const uploadedFilePathAnalysisModel = path.join(__dirname, './../../AnalysisModel-main', "gps_test_gabgal.csv");
+        uploadedFile.mv(uploadedFilePathAnalysisModel, (err) => {
+          if (err) {
+            console.error('Error moving file to AnalysisModel-main folder:', err);
+            return res.status(500).json({ message: 'Error moving file to AnalysisModel-main folder' });
+          }
+          // Both files moved successfully
+          next();
+        });
+      });
+}
+
+
 //define router
 const router = express.Router();
 
@@ -34,10 +66,10 @@ const command = `cd ../AnalysisModel-main && python ${scriptPath} gps_test_gabga
 }
 
 
-router.post('/average-height', (req, res) => {
+router.post('/average-height' ,  fileUpload , (req, res) => {
     try{
         PythonScriptRunner(res,'average_height.py');
-        const photopath = "/Users/harshilvasoya/Desktop/nms/AnalysisModel-main/pyscripts/Tree_height.png"
+        const photopath = "https://nms.topgrowth.in/pyscripts/Tree_height.png"
         res.json({statuscode:200,status: "success", message: "Script executed successfully" , photopath:photopath});
 
     }
@@ -48,10 +80,10 @@ router.post('/average-height', (req, res) => {
     }
 });
 
-router.post('/average-width', (req, res) => {
+router.post('/average-width',   fileUpload , (req, res) => {
     try{
     PythonScriptRunner(res, 'average_width.py ');
-    const photopath = "/Users/harshilvasoya/Desktop/nms/AnalysisModel-main/pyscripts/Tree_width.png"
+    const photopath = "https://nms.topgrowth.in/pyscripts/Tree_width.png"
 
     res.json({statuscode:200,status: "success", message: "Script executed successfully" , photopath:photopath});
 
@@ -62,10 +94,12 @@ router.post('/average-width', (req, res) => {
     }
 }); 
 
-router.post('/distribution-map', (req, res) => {
+router.post('/distribution-map',   fileUpload , (req, res) => {
     try{
     PythonScriptRunner(res, 'distribution_map.py');
-    const photopath = "/Users/harshilvasoya/Desktop/nms/AnalysisModel-main/pyscripts/diversity_map.png"
+
+    
+    const photopath = "https://nms.topgrowth.in/pyscripts/diversity_map.png"
 
     res.json({statuscode:200,status: "success", message: "Script executed successfully" , photopath:photopath});
 
@@ -76,10 +110,12 @@ router.post('/distribution-map', (req, res) => {
     }
 }); 
 
-router.post('/heatmap-carbonseq', (req, res) => {
+router.post('/heatmap-carbonseq',   fileUpload , (req, res) => {
     try{
         PythonScriptRunner(res,'heatmap_carbonseq.py');
-        const photopath = "/Users/harshilvasoya/Desktop/nms/AnalysisModel-main/pyscripts/carbon_seq_gabgal.png"
+        const photopath = "https://nms.topgrowth.in/pyscripts/carbon_seq_gabgal.png"
+
+        
 
         res.json({statuscode:200,status: "success", message: "Script executed successfully" , photopath:photopath});
 
@@ -90,10 +126,11 @@ router.post('/heatmap-carbonseq', (req, res) => {
     }
 });
 
-router.post('/pie-diversity', (req, res) => {
+router.post('/pie-diversity',   fileUpload , (req, res) => {
     try{
         PythonScriptRunner(res, 'pie_diversity.py')
-        const photopath = "/Users/harshilvasoya/Desktop/nms/AnalysisModel-main/pyscripts/Distribution.png"
+        const photopath = "https://nms.topgrowth.in/pyscripts/Distribution.png"
+
 
         res.json({statuscode:200,status: "success", message: "Script executed successfully" , photopath:photopath});
 
@@ -104,10 +141,12 @@ router.post('/pie-diversity', (req, res) => {
     }
 })
 
-router.post('/infographic', (req, res) => {
+router.post('/infographic',  fileUpload , (req, res) => {
     try{
         PythonScriptRunner(res, 'infographics.py');
-        const photopath = "/Users/harshilvasoya/Desktop/nms/AnalysisModel-main/pyscripts/infographic.png"
+        
+        const photopath = "https://nms.topgrowth.in/pyscripts/edited_SummaryConceptNMS.png"
+        
         res.json({statuscode:200,status: "success", message: "Script executed successfully" , photopath:photopath});
 
     }
@@ -117,11 +156,12 @@ router.post('/infographic', (req, res) => {
     }
 }); 
 
-router.post('/merged-script', async(req, res) => {
+router.post('/merged-script' ,  fileUpload ,async (req, res) => {
     try{
        await PythonScriptRunner(res,'merged_script.py');
 
-        const photopath = "/Users/harshilvasoya/Desktop/nms/AnalysisModel-main/pyscripts/final_report.pdf"
+        // const photopath = "/Users/harshilvasoya/Desktop/nms/AnalysisModel-main/pyscripts/final_report.pdf"
+        const photopath = "https://du-website.s3.ap-south-1.amazonaws.com/U01/Faculty-Photo/15---28-04-2023-02-07-35.jpg"
         res.json({statuscode:200,status: "success", message: "Script executed successfully" , photopath:photopath});
 
     }
