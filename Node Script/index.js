@@ -1,12 +1,17 @@
 const express = require('express');
 const fileUpload = require('express-fileupload');
 const cors = require("cors");
-const path = require("path");
+
+//load env file
+require("dotenv").config({path:"./.env"});
+
 const pythonScriptRoute = require("./pythonScriptRoute/startScriptRoute");
 const csvfileUpload = require("./pythonScriptRoute/uploadcsvfileRoute");
 
+//connect to database
+require("./config/bdconnection").connect();
+
 //load env file
-require("dotenv").config();
 
 //initialize express
 const app = express();
@@ -24,10 +29,12 @@ app.use(fileUpload());
 
 //set route for python script
 app.use("/pythonscript",pythonScriptRoute);
+app.use("/data" , require("./routes/dataRoutes"));
 app.use("/file",csvfileUpload);
 
 
-app.get("/1", (req,res)=>{
+//define health check
+app.get("/health", (req,res)=>{
     console.log("hittt")
     res.json({message:"Server is running"});
 })
